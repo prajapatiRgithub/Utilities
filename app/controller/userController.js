@@ -1,4 +1,3 @@
-const { GeneralError } = require('../utils/error');
 const { register, login } = require('../service/userService');
 
 module.exports = {
