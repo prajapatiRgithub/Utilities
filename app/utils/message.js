@@ -15,7 +15,7 @@ module.exports = {
     DELETE_SUCCESS: 'deleted successfully',
     REGISTER_SUCCESS: 'Congratulation! You are registered successfully.',
     USER_NOT_FOUND: `User with this email doesn't exist.`,
-    ALREADY_EXIST: `Phone no & Email Id is already registered with another account.`,
+    ALREADY_EXIST: `Email is already registered with another account.`,
     LOGIN_SUCCESS: 'You are login successfully.',
     INCORRECT_CREDENTIALS: 'Credential does not match.',
 };

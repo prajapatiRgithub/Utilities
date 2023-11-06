@@ -2,12 +2,12 @@ const { StatusCodes } = require('http-status-codes');
 const logger = require('../logger/logger');
 
 class GeneralError extends Error {
-  constructor(message, data = '', statusCode = '', status) {
+  constructor(message, statusCode = '', data = '', status) {
     logger.info(message);
     super();
     this.message = message;
-    this.statusCode = statusCode;
-    this.data = data === '' ? undefined : data;
+    this.statusCode = statusCode ? statusCode : 500;
+    this.data = data ? data : undefined;
     this.status = status;
   }
   getCode() {

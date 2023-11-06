@@ -3,4 +3,8 @@ module.exports = {
     SUCCESS: 'Success',
     ERROR: 'Error',
   },
+  ROLE: {
+    SALE: 'Sale',
+    FINANCE: 'Finance',
+  },
 };

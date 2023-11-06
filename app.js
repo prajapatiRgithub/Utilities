@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const port = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
+const logger = require('./app/logger/logger');
 require('./app/helper/db');
 
 const cors = require('cors');
@@ -18,7 +19,11 @@ app.use(
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/', require('./app/routes/route'));
+app.use(require('./app/helper/response'));
+app.use(require('./app/helper/error').handleJoiErrors);
+app.use(require('./app/helper/error').handleErrors);
 
 app.listen(port, () => {
-  console.log(`Server is running.. :${port}`);
+ logger.info(`Server is running.. :${port}`);
 });

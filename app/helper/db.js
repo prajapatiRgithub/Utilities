@@ -26,6 +26,8 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+db.authUserModel = require('../model/user')(sequelize, Sequelize);
+
 db.sequelize.sync(db.sequelize.sync({
     force : false , // To create table if exists , so make it false
     alter : false // To update the table if exists , so make it true
