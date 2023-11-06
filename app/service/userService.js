@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const db = require('../helper/db');
-const logger = require('../logger/logger');
 const message = require('../utils/message');
 const { GeneralError } = require('../utils/error');
 const { GeneralResponse } = require('../utils/response');
@@ -56,7 +55,7 @@ module.exports = {
         new GeneralError(
           `${message.REQUEST_FAILURE} registration.`,
           undefined,
-          err.original.sqlMessage ? err.original.sqlMessage : undefined,
+          err?.original?.sqlMessage ? err.original.sqlMessage : undefined,
           RESPONSE_STATUS.ERROR
         )
       );
@@ -111,7 +110,7 @@ module.exports = {
         new GeneralError(
           `${message.REQUEST_FAILURE} login.`,
           undefined,
-          err.original.sqlMessage ? err.original.sqlMessage : undefined,
+          err?.original?.sqlMessage ? err.original.sqlMessage : undefined,
           RESPONSE_STATUS.ERROR
         )
       );
