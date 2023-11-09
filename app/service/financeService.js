@@ -4,7 +4,7 @@ const { GeneralError } = require('../utils/error');
 const { GeneralResponse } = require('../utils/response');
 const { StatusCodes } = require('http-status-codes');
 const { RESPONSE_STATUS } = require('../utils/enum');
-const { bulkCreate, findAll } = require('../helper/serviceLayer');
+const { bulkCreate, findAll, destroy } = require('../helper/serviceLayer');
 const cashCollectionModel = db.cashCollectionModel;
 const XLSX = require('xlsx');
 
@@ -172,6 +172,45 @@ module.exports = {
       next(
         new GeneralError(
           `${message.REQUEST_FAILURE} view report.`,
+          undefined,
+          err?.original?.sqlMessage ? err.original.sqlMessage : undefined,
+          RESPONSE_STATUS.ERROR
+        )
+      );
+    }
+  },
+
+  truncatedReports: async (next) => {
+    try {
+      const deleteSales = await destroy(
+        cashCollectionModel,
+        {}
+      );
+    
+      if (deleteSales > 0) {
+        next(
+          new GeneralResponse(
+            `Report ${message.TRUNCATED}`,
+            undefined,
+            StatusCodes.OK,
+            RESPONSE_STATUS.SUCCESS
+          )
+        );
+      } else {
+        next(
+          new GeneralResponse(
+            message.DATA_NOT_FOUND,
+            undefined,
+            StatusCodes.NOT_FOUND,
+            RESPONSE_STATUS.ERROR
+          )
+        );
+      }
+    } catch (err) {
+      console.log('dfd',err);
+      next(
+        new GeneralError(
+          `${message.REQUEST_FAILURE} delete report.`,
           undefined,
           err?.original?.sqlMessage ? err.original.sqlMessage : undefined,
           RESPONSE_STATUS.ERROR
