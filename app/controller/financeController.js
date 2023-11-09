@@ -1,4 +1,4 @@
-const { addReport, listOfCashCollection } = require('../service/financeService');
+const { addReport, listOfCashCollection, truncatedReports } = require('../service/financeService');
 
 module.exports = {
   addReportController: (req, res, next) => {
@@ -9,7 +9,7 @@ module.exports = {
     return listOfCashCollection(next);
   },
 
-  updateReportController: (req, res, next) => {
-    return updateReport(req, next);
+  truncatedController: (req, res, next) => {
+    return truncatedReports(next);
   },
 };

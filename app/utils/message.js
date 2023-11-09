@@ -18,5 +18,6 @@ module.exports = {
     ALREADY_EXIST: `Email is already registered with another account.`,
     LOGIN_SUCCESS: 'You are login successfully.',
     INCORRECT_CREDENTIALS: 'Credential does not match.',
-    REQUIRED_FILE: 'Please upload a CSV file!.'
+    REQUIRED_FILE: 'Please upload a CSV file!.',
+    TRUNCATED: 'has been truncated.'
 };
