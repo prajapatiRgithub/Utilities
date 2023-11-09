@@ -1,12 +1,10 @@
 const jwt = require('jsonwebtoken');
-const { GeneralError } = require('../utils/error');
 const { RESPONSE_STATUS } = require('../utils/enum');
 const message = require('../utils/message');
-const { StatusCodes } = require('http-status-codes');
 const logger = require('../logger/logger');
 // Middleware for Generating a new JWT Token
 const generateToken = (data) => {
-  return jwt.sign({ id: data.id, role: data.role}, process.env.PRIVATEKEY, {
+  return jwt.sign({ id: data.id, role: data.role }, process.env.PRIVATEKEY, {
     expiresIn: '365d',
   });
 };
@@ -18,14 +16,11 @@ const authorization = (roles = []) => {
       const token = req.header('Authorization');
       if (!token) {
         logger.error(message.AUTH_MISSING);
-        next(
-          new GeneralError(
-            message.AUTH_MISSING,
-            undefined,
-            StatusCodes.UNAUTHORIZED,
-            RESPONSE_STATUS.ERROR
-          )
-        );
+        res.status(401).json({
+          status: RESPONSE_STATUS.ERROR,
+          code: 401,
+          message: message.AUTH_MISSING,
+        });
       }
 
       const verified = jwt.verify(token, process.env.PRIVATEKEY);
@@ -34,14 +29,11 @@ const authorization = (roles = []) => {
         next();
       } else {
         logger.error(message.ACCESS_REQUIRED);
-        next(
-          new GeneralError(
-            message.ACCESS_REQUIRED,
-            undefined,
-            StatusCodes.UNAUTHORIZED,
-            RESPONSE_STATUS.ERROR
-          )
-        );
+        res.status(401).json({
+          status: RESPONSE_STATUS.ERROR,
+          code: 401,
+          message: message.ACCESS_REQUIRED,
+        });
       }
     } catch (err) {
       let errorResponse =
@@ -51,15 +43,12 @@ const authorization = (roles = []) => {
           ? message.TOKEN_INVALID
           : `${message.REQUEST_FAILURE} authorization.`;
 
-    logger.error(message.errorResponse);
-      next(
-        new GeneralError(
-            errorResponse,
-          undefined,
-          undefined,
-          RESPONSE_STATUS.ERROR
-        )
-      );
+      logger.error(message.errorResponse);
+      res.status(401).json({
+        status: RESPONSE_STATUS.ERROR,
+        code: 401,
+        message: errorResponse,
+      });
     }
   };
 };

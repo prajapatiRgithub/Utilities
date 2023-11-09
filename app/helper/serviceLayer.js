@@ -1,10 +1,10 @@
 module.exports = {
-  create: async (collection, insertData) => {
-    return collection.create(insertData);
+  create: async (collection, insertData, transaction) => {
+    return collection.create(insertData, {transaction: transaction});
   },
 
-  bulkCreate: async (collection, insertData) => {
-    return collection.bulkCreate(insertData);
+  bulkCreate: async (collection, insertData, transaction) => {
+    return collection.bulkCreate(insertData,{transaction: transaction});
   },
 
   findOne: async (collection, condition, selectAttribute) => {

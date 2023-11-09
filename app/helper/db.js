@@ -27,12 +27,12 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.authUserModel = require('../model/user')(sequelize, Sequelize);
+db.cashCollectionModel = require('../model/cashCollection')(sequelize, Sequelize);
 
-db.sequelize.sync(db.sequelize.sync({
-    force : false , // To create table if exists , so make it false
-    alter : false // To update the table if exists , so make it true
-})).then(() => {
+db.sequelize.sync().then(() => {
   logger.info('yes re-sync');
-});
+}).catch((err) => {
+  console.log('no sync error', err);
+})
 
 module.exports = db;

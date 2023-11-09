@@ -6,7 +6,7 @@
 # Node artifact files
 node_modules/
 dist/
-app/public/uploads
+/public/uploads
 .env
 package-lock.json
 
