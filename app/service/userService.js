@@ -12,6 +12,7 @@ const saltRounds = 10;
 
 module.exports = {
   register: async (req, next) => {
+    const t = await db.sequelize.transaction();
     try {
       let { email_id, password } = req.body;
 
@@ -19,9 +20,10 @@ module.exports = {
 
       if (!findUser) {
         req.body.password = await bcrypt.hash(password, saltRounds);
-        const registerUser = await create(usersModel, req.body);
+        const registerUser = await create(usersModel, req.body, t);
 
         if (registerUser && Object.keys(registerUser).length > 0) {
+          await t.commit();
           next(
             new GeneralResponse(
               message.REGISTER_SUCCESS,
@@ -51,6 +53,7 @@ module.exports = {
         );
       }
     } catch (err) {
+      await t.rollback();
       next(
         new GeneralError(
           `${message.REQUEST_FAILURE} registration.`,
