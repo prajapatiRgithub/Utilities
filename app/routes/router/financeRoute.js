@@ -22,7 +22,7 @@ router.get(
 );
 
 router.delete(
-  '/api/finance/truncated',
+  '/api/finance/truncatedReport',
   authorization(['Finance']),
   truncatedController
 );
