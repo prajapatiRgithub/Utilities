@@ -66,7 +66,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       reference_type: {
-        type: Sequelize.STRING(10),
+        type: Sequelize.STRING(255),
         allowNull: false,
       },
       comment: {

@@ -45,7 +45,6 @@ module.exports = {
         'Wallet Type',
         'Transaction Amount',
         'Payment Amount',
-        'Payment Amount',
         'Salesperson',
         'Reference Type',
         'Comment',
